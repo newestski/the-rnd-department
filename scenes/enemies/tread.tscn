@@ -1,0 +1,170 @@
+[gd_scene format=3 uid="uid://bypkwggjmb6ej"]
+
+[ext_resource type="Script" uid="uid://t8i4e6ig3xxg" path="res://scripts/navigation_character.gd" id="1_p5gb4"]
+[ext_resource type="Texture2D" uid="uid://cns8oe0v8lhwj" path="res://assets/sprites/tread.png" id="2_p5gb4"]
+[ext_resource type="Script" uid="uid://6v8hrehld5ww" path="res://scripts/particale_system.gd" id="3_krmy6"]
+[ext_resource type="Script" uid="uid://b4wr0ctkidk8d" path="res://scripts/state_machine.gd" id="4_ewlas"]
+[ext_resource type="Script" uid="uid://cmjntyylk8i1f" path="res://scripts/basic_nav_state.gd" id="5_1knos"]
+[ext_resource type="Script" uid="uid://c2n4cc7xbb27l" path="res://scripts/dead_state.gd" id="6_0xwby"]
+[ext_resource type="Script" uid="uid://d0rktxyd1xhah" path="res://scripts/health_component.gd" id="8_unpsc"]
+[ext_resource type="Script" uid="uid://bgliphpeitern" path="res://scripts/bullet_component.gd" id="9_fiwo3"]
+[ext_resource type="PackedScene" uid="uid://c6lehj6gqn14g" path="res://scenes/essentials/deafult_point_light.tscn" id="10_jk33q"]
+[ext_resource type="Script" uid="uid://6em00wnyxl76" path="res://scripts/big_gun.gd" id="11_ewlas"]
+[ext_resource type="Texture2D" uid="uid://b60p8lmtfbtef" path="res://assets/sprites/tread_gun.png" id="11_xfxlh"]
+[ext_resource type="Script" uid="uid://dss706hdqsqrj" path="res://scripts/point_at_target.gd" id="12_krmy6"]
+[ext_resource type="Script" uid="uid://bop0buftgou5c" path="res://scripts/sound_component.gd" id="14_0xwby"]
+[ext_resource type="AudioStream" uid="uid://dr2bhb85fufnm" path="res://assets/sounds/hitHurt.wav" id="15_0xwby"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_viec0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xfxlh"]
+atlas = ExtResource("2_p5gb4")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_krmy6"]
+atlas = ExtResource("2_p5gb4")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ewlas"]
+atlas = ExtResource("2_p5gb4")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1knos"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xfxlh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_krmy6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ewlas")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_3f8o3"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_1knos"]
+gradient = SubResource("Gradient_3f8o3")
+width = 8
+height = 8
+
+[sub_resource type="Curve" id="Curve_0xwby"]
+_limits = [-1.0, 2.2263489, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.24455208, 2.2263489), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_df4wh"]
+_data = [Vector2(0, 1), 0.0, 2.7243865, 0, 0, Vector2(0.012106534, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="Tread" type="CharacterBody2D" unique_id=1213032386 node_paths=PackedStringArray("navigation_agent", "collider", "state_machine", "particle_system", "sprite", "health_component", "bullet_component") groups=["enemy"]]
+collision_layer = 32
+collision_mask = 137
+script = ExtResource("1_p5gb4")
+move_speed = 1400.0
+navigation_agent = NodePath("NavigationAgent2D")
+collider = NodePath("CollisionShape2D")
+state_machine = NodePath("StateMachine")
+particle_system = NodePath("ParticleSystem")
+sprite = NodePath("AnimatedSprite2D")
+health_component = NodePath("HealthComponent")
+bullet_component = NodePath("BulletComponent")
+metadata/_custom_type_script = "uid://t8i4e6ig3xxg"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1001671736]
+shape = SubResource("RectangleShape2D_viec0")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1427874488]
+sprite_frames = SubResource("SpriteFrames_1knos")
+autoplay = "default"
+frame_progress = 0.24135414
+
+[node name="ParticleSystem" type="Node2D" parent="." unique_id=762959413]
+script = ExtResource("3_krmy6")
+metadata/_custom_type_script = "uid://6v8hrehld5ww"
+
+[node name="Explode" type="CPUParticles2D" parent="ParticleSystem" unique_id=1040375843]
+emitting = false
+amount = 15
+texture = SubResource("GradientTexture2D_1knos")
+one_shot = true
+explosiveness = 1.0
+spread = 180.0
+gravity = Vector2(0, 10)
+initial_velocity_max = 50.0
+angular_velocity_min = -720.0
+angular_velocity_max = 720.0
+orbit_velocity_min = -0.25
+orbit_velocity_max = 0.25
+linear_accel_min = -29.72
+linear_accel_max = -10.0
+linear_accel_curve = SubResource("Curve_0xwby")
+scale_amount_curve = SubResource("Curve_df4wh")
+
+[node name="StateMachine" type="Node" parent="." unique_id=1497919715 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("4_ewlas")
+initial_state = NodePath("BasicNavState")
+metadata/_custom_type_script = "uid://b4wr0ctkidk8d"
+
+[node name="BasicNavState" type="Node" parent="StateMachine" unique_id=1111743345]
+script = ExtResource("5_1knos")
+move_speed = 800.0
+metadata/_custom_type_script = "uid://cmjntyylk8i1f"
+
+[node name="DeadState" type="Node" parent="StateMachine" unique_id=1874713478]
+script = ExtResource("6_0xwby")
+metadata/_custom_type_script = "uid://c2n4cc7xbb27l"
+
+[node name="HealthComponent" type="Node" parent="." unique_id=153843864]
+script = ExtResource("8_unpsc")
+max_health = 30.0
+hurt_sound = "hurt_sound"
+metadata/_custom_type_script = "uid://d0rktxyd1xhah"
+
+[node name="BulletComponent" type="Node" parent="." unique_id=1458259319]
+script = ExtResource("9_fiwo3")
+metadata/_custom_type_script = "uid://bgliphpeitern"
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1447880032]
+
+[node name="PointLight2D" parent="." unique_id=1135430492 instance=ExtResource("10_jk33q")]
+color = Color(7.70092e-07, 0.558012, 0.89031583, 1)
+texture_scale = 0.5
+
+[node name="BigGun" type="Node2D" parent="." unique_id=52865603]
+position = Vector2(0, -1)
+script = ExtResource("11_ewlas")
+velocity = 100.0
+
+[node name="Sprite2D" type="Sprite2D" parent="BigGun" unique_id=249937220]
+texture = ExtResource("11_xfxlh")
+
+[node name="BulletComponent" type="Node" parent="BigGun" unique_id=843356565]
+script = ExtResource("9_fiwo3")
+metadata/_custom_type_script = "uid://bgliphpeitern"
+
+[node name="PointAtTarget" type="Node" parent="BigGun" unique_id=1823138016]
+script = ExtResource("12_krmy6")
+metadata/_custom_type_script = "uid://dss706hdqsqrj"
+
+[node name="Timer" type="Timer" parent="BigGun" unique_id=959957720]
+wait_time = 5.0
+autostart = true
+
+[node name="SoundComponent" type="Node2D" parent="." unique_id=1606606351]
+script = ExtResource("14_0xwby")
+metadata/_custom_type_script = "uid://bop0buftgou5c"
+
+[node name="HurtSound" type="AudioStreamPlayer2D" parent="SoundComponent" unique_id=977127133]
+stream = ExtResource("15_0xwby")
+volume_db = 4.0
+bus = &"SFX"
+
+[connection signal="timeout" from="BigGun/Timer" to="BigGun" method="_on_timer_timeout"]

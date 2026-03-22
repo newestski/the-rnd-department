@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://dpnlp0v7vuwab"]
+
+[ext_resource type="Script" uid="uid://blcxvgtsrs14y" path="res://scripts/weapons/explosive_shotgun.gd" id="1_vlsto"]
+[ext_resource type="Texture2D" uid="uid://gdxpn1m3l5ws" path="res://assets/sprites/explosive_shotgun.png" id="2_0talr"]
+[ext_resource type="AudioStream" uid="uid://c2xc334wo0dre" path="res://assets/sounds/shoot.wav" id="3_46wg6"]
+[ext_resource type="Script" uid="uid://6p2g2ykbnv7l" path="res://scripts/despawn_component.gd" id="4_7o4f5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0talr"]
+
+[node name="ExplosiveShotgun" type="Node2D" unique_id=659098105 node_paths=PackedStringArray("shoot_sfx")]
+script = ExtResource("1_vlsto")
+initial_ammo = 3
+shoot_sfx = NodePath("ShootSound")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=288136104]
+collision_layer = 4
+collision_mask = 35
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=96502359]
+shape = SubResource("RectangleShape2D_0talr")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1379773580]
+texture = ExtResource("2_0talr")
+
+[node name="ShootSound" type="AudioStreamPlayer2D" parent="." unique_id=1821611415]
+stream = ExtResource("3_46wg6")
+bus = &"SFX"
+
+[node name="DespawnComponent" type="Node" parent="." unique_id=2092067720]
+script = ExtResource("4_7o4f5")
+time_between_flashes = 0.05

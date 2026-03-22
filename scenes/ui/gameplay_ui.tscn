@@ -1,0 +1,468 @@
+[gd_scene format=3 uid="uid://dgsc1aep5w1k6"]
+
+[ext_resource type="PackedScene" uid="uid://bbnbbcntmcbl5" path="res://scenes/ui/weapon_slot.tscn" id="1_pygfh"]
+[ext_resource type="Script" uid="uid://bt1xesrlykonx" path="res://scripts/gameplay_ui.gd" id="1_xarm8"]
+[ext_resource type="Script" uid="uid://lc0jht7qimfm" path="res://scenes/ui/health_bar.gd" id="2_8873e"]
+[ext_resource type="Script" uid="uid://cj750to23sxw2" path="res://scenes/ui/results_screen.gd" id="3_gwdo8"]
+[ext_resource type="Theme" uid="uid://c0kttx6uymffl" path="res://scenes/ui/new_theme.tres" id="3_soafi"]
+[ext_resource type="Script" uid="uid://cc5ouyxjp6ibn" path="res://scenes/ui/exit_button.gd" id="6_3ny6e"]
+[ext_resource type="PackedScene" uid="uid://dd1xvk6sjmngj" path="res://scenes/essentials/settings_menu.tscn" id="7_63da3"]
+[ext_resource type="PackedScene" uid="uid://5k55da2vheau" path="res://scenes/ui/pause_menu.tscn" id="8_sgack"]
+[ext_resource type="PackedScene" uid="uid://6q8uayd4t3jc" path="res://scenes/ui/fade_transition.tscn" id="9_mh8oh"]
+[ext_resource type="AudioStream" uid="uid://c2xc334wo0dre" path="res://assets/sounds/shoot.wav" id="10_8duql"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8873e"]
+bg_color = Color(0.1882353, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3ny6e"]
+bg_color = Color(0.79, 0, 0.013166466, 1)
+
+[sub_resource type="Theme" id="Theme_xarm8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_soafi"]
+content_margin_left = 0.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_detail = 1
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xarm8"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gwdo8"]
+bg_color = Color(1, 0, 0.016666412, 0.20392157)
+
+[sub_resource type="Animation" id="Animation_gwdo8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_soafi"]
+resource_name = "open"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.56666666),
+"transitions": PackedFloat32Array(0.09807308, 0.8408969),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gwdo8"]
+_data = {
+&"RESET": SubResource("Animation_gwdo8"),
+&"open": SubResource("Animation_soafi")
+}
+
+[sub_resource type="Animation" id="Animation_mh8oh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_8duql"]
+resource_name = "slam"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.13333334, 1.8666667, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 0.022097094),
+"update": 0,
+"values": [Vector2(2, 2), Vector2(1, 1)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../AudioStreamPlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.20000005),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2niw3"]
+_data = {
+&"RESET": SubResource("Animation_mh8oh"),
+&"slam": SubResource("Animation_8duql")
+}
+
+[sub_resource type="Animation" id="Animation_2niw3"]
+resource_name = "cool_text"
+length = 5.5666666
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label/AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": PackedStringArray("slam"),
+"times": PackedFloat32Array(0.6333333)
+}
+tracks/1/type = "animation"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label2/AnimationPlayer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": PackedStringArray("slam"),
+"times": PackedFloat32Array(3.1)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xhc1x"]
+_data = {
+&"cool_text": SubResource("Animation_2niw3")
+}
+
+[node name="GameplayUI" type="Control" unique_id=1563240375 groups=["main_ui"]]
+process_mode = 3
+z_index = 20
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+script = ExtResource("1_xarm8")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1710102700]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Control" type="Control" parent="MarginContainer" unique_id=720876670]
+layout_mode = 2
+
+[node name="HealthBar" type="Control" parent="MarginContainer/Control" unique_id=1447367775]
+custom_minimum_size = Vector2(100, 16)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -10.0
+offset_right = 100.0
+grow_vertical = 0
+script = ExtResource("2_8873e")
+
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/Control/HealthBar" unique_id=1475482194]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_soafi")
+theme_override_styles/background = SubResource("StyleBoxFlat_8873e")
+theme_override_styles/fill = SubResource("StyleBoxFlat_3ny6e")
+
+[node name="WeaponsSlots" type="BoxContainer" parent="MarginContainer/Control" unique_id=207871179]
+layout_direction = 3
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -32.0
+offset_right = 86.0
+grow_vertical = 0
+theme_override_constants/separation = 10
+
+[node name="WeaponSlot" parent="MarginContainer/Control/WeaponsSlots" unique_id=1618289980 instance=ExtResource("1_pygfh")]
+layout_mode = 2
+
+[node name="Panel2" type="Panel" parent="MarginContainer/Control/WeaponsSlots/WeaponSlot" unique_id=1708475752]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 1.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(16, 16)
+theme = SubResource("Theme_xarm8")
+theme_override_styles/panel = SubResource("StyleBoxFlat_soafi")
+
+[node name="Panel" type="Panel" parent="MarginContainer/Control/WeaponsSlots/WeaponSlot" unique_id=1396007573]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(16, 16)
+theme = SubResource("Theme_xarm8")
+theme_override_styles/panel = SubResource("StyleBoxFlat_xarm8")
+
+[node name="WeaponSlot2" parent="MarginContainer/Control/WeaponsSlots" unique_id=2088095118 instance=ExtResource("1_pygfh")]
+layout_mode = 2
+
+[node name="ResultsScreen" type="Control" parent="." unique_id=2013709990]
+visible = false
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_gwdo8")
+
+[node name="Panel" type="Panel" parent="ResultsScreen" unique_id=1100205381]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_gwdo8")
+
+[node name="CenterContainer" type="CenterContainer" parent="ResultsScreen" unique_id=1242294720]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="ResultsScreen/CenterContainer" unique_id=1588361526]
+layout_mode = 2
+theme = ExtResource("3_soafi")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ResultsScreen/CenterContainer/PanelContainer" unique_id=730953216]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ResultsScreen/CenterContainer/PanelContainer/VBoxContainer" unique_id=1374605152]
+layout_mode = 2
+theme = ExtResource("3_soafi")
+theme_override_font_sizes/font_size = 16
+text = "You Lost!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="ResultsScreen/CenterContainer/PanelContainer/VBoxContainer" unique_id=1859102822]
+layout_mode = 2
+theme = ExtResource("3_soafi")
+text = "Results:"
+
+[node name="LabelPoints" type="Label" parent="ResultsScreen/CenterContainer/PanelContainer/VBoxContainer" unique_id=1575750916]
+layout_mode = 2
+theme = ExtResource("3_soafi")
+text = "Points - 000000"
+
+[node name="LabelKills" type="Label" parent="ResultsScreen/CenterContainer/PanelContainer/VBoxContainer" unique_id=800043024]
+layout_mode = 2
+theme = ExtResource("3_soafi")
+text = "Kills - 000"
+
+[node name="LabelTime" type="Label" parent="ResultsScreen/CenterContainer/PanelContainer/VBoxContainer" unique_id=345761484]
+layout_mode = 2
+theme = ExtResource("3_soafi")
+text = "Time - 0:00"
+
+[node name="Control" type="Control" parent="ResultsScreen/CenterContainer/PanelContainer/VBoxContainer" unique_id=479208889]
+layout_mode = 2
+
+[node name="ExitButton" type="Button" parent="ResultsScreen/CenterContainer/PanelContainer/VBoxContainer" unique_id=1607221036]
+layout_mode = 2
+text = "Return to Menu"
+script = ExtResource("6_3ny6e")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ResultsScreen" unique_id=611141433]
+root_node = NodePath("../CenterContainer")
+libraries/ = SubResource("AnimationLibrary_gwdo8")
+autoplay = &"RESET"
+
+[node name="SettingsMenu" parent="." unique_id=844826488 instance=ExtResource("7_63da3")]
+visible = false
+z_index = 1
+layout_mode = 1
+offset_left = -60.0
+offset_top = -36.0
+offset_right = 60.0
+offset_bottom = 36.0
+
+[node name="PauseMenu" parent="." unique_id=1188695006 instance=ExtResource("8_sgack")]
+process_priority = 1
+z_index = 1
+layout_mode = 1
+
+[node name="FadeTransition" parent="." unique_id=854849442 instance=ExtResource("9_mh8oh")]
+visible = false
+z_index = 1
+layout_mode = 1
+
+[node name="CoolText" type="Control" parent="." unique_id=1673650143]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CoolText" unique_id=373950428]
+stream = ExtResource("10_8duql")
+volume_db = -10.0
+bus = &"SFX"
+
+[node name="Label" type="Label" parent="CoolText" unique_id=294958321]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -148.5
+offset_top = -12.0
+offset_right = 148.5
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 0)
+theme = ExtResource("3_soafi")
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "THEY ARE COMING"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CoolText/Label" unique_id=893299688]
+libraries/ = SubResource("AnimationLibrary_2niw3")
+
+[node name="Label2" type="Label" parent="CoolText" unique_id=1043837912]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -213.0
+offset_top = -12.0
+offset_right = 213.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+theme = ExtResource("3_soafi")
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "DON'T LET THEM ESCAPE"
+horizontal_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CoolText/Label2" unique_id=58109555]
+libraries/ = SubResource("AnimationLibrary_2niw3")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CoolText" unique_id=1908939198]
+libraries/ = SubResource("AnimationLibrary_xhc1x")
+
+[connection signal="pressed" from="ResultsScreen/CenterContainer/PanelContainer/VBoxContainer/ExitButton" to="ResultsScreen/CenterContainer/PanelContainer/VBoxContainer/ExitButton" method="_on_pressed"]

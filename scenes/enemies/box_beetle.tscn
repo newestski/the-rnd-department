@@ -1,0 +1,151 @@
+[gd_scene format=3 uid="uid://nrglqro1e0u4"]
+
+[ext_resource type="Script" uid="uid://t8i4e6ig3xxg" path="res://scripts/navigation_character.gd" id="1_7apu7"]
+[ext_resource type="Texture2D" uid="uid://be7nkp7il1r3m" path="res://assets/sprites/box_beetle.png" id="2_58efn"]
+[ext_resource type="Script" uid="uid://6v8hrehld5ww" path="res://scripts/particale_system.gd" id="3_6pk1x"]
+[ext_resource type="Script" uid="uid://b4wr0ctkidk8d" path="res://scripts/state_machine.gd" id="4_gvlqw"]
+[ext_resource type="Script" uid="uid://cmjntyylk8i1f" path="res://scripts/basic_nav_state.gd" id="5_3f8o3"]
+[ext_resource type="Script" uid="uid://c2n4cc7xbb27l" path="res://scripts/dead_state.gd" id="6_58efn"]
+[ext_resource type="Script" uid="uid://d0rktxyd1xhah" path="res://scripts/health_component.gd" id="6_r72g8"]
+[ext_resource type="Script" uid="uid://bgliphpeitern" path="res://scripts/bullet_component.gd" id="7_aeybo"]
+[ext_resource type="PackedScene" uid="uid://c6lehj6gqn14g" path="res://scenes/essentials/deafult_point_light.tscn" id="9_6pk1x"]
+[ext_resource type="Script" uid="uid://bop0buftgou5c" path="res://scripts/sound_component.gd" id="11_r72g8"]
+[ext_resource type="AudioStream" uid="uid://dr2bhb85fufnm" path="res://assets/sounds/hitHurt.wav" id="12_r72g8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_viec0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1cmfb"]
+atlas = ExtResource("2_58efn")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_788nv"]
+atlas = ExtResource("2_58efn")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nm80l"]
+atlas = ExtResource("2_58efn")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fqp28"]
+atlas = ExtResource("2_58efn")
+region = Rect2(0, 96, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_j8soq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1cmfb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_788nv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nm80l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fqp28")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_3f8o3"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_r72g8"]
+gradient = SubResource("Gradient_3f8o3")
+width = 8
+height = 8
+
+[sub_resource type="Curve" id="Curve_aeybo"]
+_limits = [-1.0, 2.2263489, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.24455208, 2.2263489), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_viec0"]
+_data = [Vector2(0, 1), 0.0, 2.7243865, 0, 0, Vector2(0.012106534, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="BoxBeetle" type="CharacterBody2D" unique_id=1213032386 node_paths=PackedStringArray("navigation_agent", "collider", "state_machine", "particle_system", "sprite", "health_component", "bullet_component") groups=["enemy"]]
+collision_layer = 32
+collision_mask = 137
+script = ExtResource("1_7apu7")
+navigation_agent = NodePath("NavigationAgent2D")
+collider = NodePath("CollisionShape2D")
+state_machine = NodePath("StateMachine")
+particle_system = NodePath("ParticleSystem")
+sprite = NodePath("AnimatedSprite2D")
+health_component = NodePath("HealthComponent")
+bullet_component = NodePath("BulletComponent")
+metadata/_custom_type_script = "uid://t8i4e6ig3xxg"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1001671736]
+shape = SubResource("RectangleShape2D_viec0")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1427874488]
+sprite_frames = SubResource("SpriteFrames_j8soq")
+autoplay = "default"
+frame_progress = 0.6758914
+
+[node name="ParticleSystem" type="Node2D" parent="." unique_id=762959413]
+script = ExtResource("3_6pk1x")
+metadata/_custom_type_script = "uid://6v8hrehld5ww"
+
+[node name="Explode" type="CPUParticles2D" parent="ParticleSystem" unique_id=2070010748]
+emitting = false
+amount = 15
+texture = SubResource("GradientTexture2D_r72g8")
+one_shot = true
+explosiveness = 1.0
+spread = 180.0
+gravity = Vector2(0, 10)
+initial_velocity_max = 50.0
+angular_velocity_min = -720.0
+angular_velocity_max = 720.0
+orbit_velocity_min = -0.25
+orbit_velocity_max = 0.25
+linear_accel_min = -29.72
+linear_accel_max = -10.0
+linear_accel_curve = SubResource("Curve_aeybo")
+scale_amount_curve = SubResource("Curve_viec0")
+
+[node name="StateMachine" type="Node" parent="." unique_id=1497919715 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("4_gvlqw")
+initial_state = NodePath("BasicNavState")
+metadata/_custom_type_script = "uid://b4wr0ctkidk8d"
+
+[node name="BasicNavState" type="Node" parent="StateMachine" unique_id=1111743345]
+script = ExtResource("5_3f8o3")
+move_speed = 1800.0
+metadata/_custom_type_script = "uid://cmjntyylk8i1f"
+
+[node name="DeadState" type="Node" parent="StateMachine" unique_id=1874713478]
+script = ExtResource("6_58efn")
+metadata/_custom_type_script = "uid://c2n4cc7xbb27l"
+
+[node name="HealthComponent" type="Node" parent="." unique_id=153843864]
+script = ExtResource("6_r72g8")
+max_health = 30.0
+hurt_sound = "hurt_sound"
+metadata/_custom_type_script = "uid://d0rktxyd1xhah"
+
+[node name="BulletComponent" type="Node" parent="." unique_id=1458259319]
+script = ExtResource("7_aeybo")
+metadata/_custom_type_script = "uid://bgliphpeitern"
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1447880032]
+
+[node name="PointLight2D" parent="." unique_id=1135430492 instance=ExtResource("9_6pk1x")]
+color = Color(7.70092e-07, 0.558012, 0.89031583, 1)
+texture_scale = 0.5
+
+[node name="SoundComponent" type="Node2D" parent="." unique_id=1566834995]
+script = ExtResource("11_r72g8")
+metadata/_custom_type_script = "uid://bop0buftgou5c"
+
+[node name="HurtSound" type="AudioStreamPlayer2D" parent="SoundComponent" unique_id=1612134137]
+stream = ExtResource("12_r72g8")
+volume_db = 4.0
+bus = &"SFX"

@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://c4o7m0xmoc7i1"]
+
+[ext_resource type="Script" uid="uid://clm6rmvwrvn3f" path="res://scripts/weapons/one_brick.gd" id="1_lmyv3"]
+[ext_resource type="Texture2D" uid="uid://cm0srwfqlxr82" path="res://assets/sprites/brick.png" id="2_lmyv3"]
+[ext_resource type="AudioStream" uid="uid://cjhjcc3hbraao" path="res://assets/sounds/punch.wav" id="3_0teji"]
+[ext_resource type="Script" uid="uid://6p2g2ykbnv7l" path="res://scripts/despawn_component.gd" id="4_pq3wo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0teji"]
+
+[node name="one_brick" type="Node2D" unique_id=814791711 node_paths=PackedStringArray("shoot_sfx")]
+script = ExtResource("1_lmyv3")
+initial_ammo = 1
+throw_damage = 50.0
+shoot_sfx = NodePath("ShootSound")
+metadata/_custom_type_script = "uid://bfog4w7i6tan1"
+
+[node name="Area2D" type="Area2D" parent="." unique_id=834110146]
+collision_layer = 4
+collision_mask = 35
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=2133637859]
+shape = SubResource("RectangleShape2D_0teji")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1314491692]
+texture = ExtResource("2_lmyv3")
+
+[node name="ShootSound" type="AudioStreamPlayer2D" parent="." unique_id=899426643]
+stream = ExtResource("3_0teji")
+bus = &"SFX"
+
+[node name="DespawnComponent" type="Node" parent="." unique_id=1840427242]
+script = ExtResource("4_pq3wo")
+time_between_flashes = 0.05

@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://bqjd0vu21m8ik"]
+
+[ext_resource type="Script" uid="uid://843qms4uqqqu" path="res://scripts/bullet.gd" id="1_oknc0"]
+[ext_resource type="Texture2D" uid="uid://dpbqu8ekmpdkx" path="res://assets/sprites/bullet.png" id="2_a45h5"]
+[ext_resource type="PackedScene" uid="uid://c6lehj6gqn14g" path="res://scenes/essentials/deafult_point_light.tscn" id="3_a45h5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_auuod"]
+radius = 4.0
+
+[node name="TestBullet1" type="Area2D" unique_id=2030815831]
+collision_layer = 16
+collision_mask = 3
+script = ExtResource("1_oknc0")
+metadata/_custom_type_script = "uid://843qms4uqqqu"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=329171591]
+shape = SubResource("CircleShape2D_auuod")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1291603056]
+position = Vector2(0, 1)
+texture = ExtResource("2_a45h5")
+
+[node name="PointLight2D" parent="." unique_id=1135430492 instance=ExtResource("3_a45h5")]
+color = Color(0.6370022, 0.5231224, 1, 1)
+energy = 5.0
+texture_scale = 0.25

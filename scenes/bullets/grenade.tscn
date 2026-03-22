@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://2tkjirmowb2h"]
+
+[ext_resource type="Script" uid="uid://dxx10wlcdpxol" path="res://scripts/bullets/grenade.gd" id="1_d0dhp"]
+[ext_resource type="Texture2D" uid="uid://blnar3lv34yhe" path="res://assets/sprites/grenade.png" id="2_jithv"]
+[ext_resource type="PackedScene" uid="uid://c6lehj6gqn14g" path="res://scenes/essentials/deafult_point_light.tscn" id="3_qml07"]
+[ext_resource type="Script" uid="uid://bgliphpeitern" path="res://scripts/bullet_component.gd" id="4_jithv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xd04x"]
+radius = 5.0
+
+[node name="Grenade" type="Area2D" unique_id=2073784966]
+collision_layer = 8
+collision_mask = 33
+script = ExtResource("1_d0dhp")
+grav = 1000.0
+metadata/_custom_type_script = "uid://843qms4uqqqu"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=459307033]
+shape = SubResource("CircleShape2D_xd04x")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=915986690]
+texture = ExtResource("2_jithv")
+hframes = 2
+
+[node name="PointLight2D" parent="." unique_id=1135430492 instance=ExtResource("3_qml07")]
+color = Color(1, 0, 0, 1)
+
+[node name="BulletComponent" type="Node" parent="." unique_id=483234311]
+script = ExtResource("4_jithv")
+metadata/_custom_type_script = "uid://bgliphpeitern"

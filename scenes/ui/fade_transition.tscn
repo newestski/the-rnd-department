@@ -1,0 +1,74 @@
+[gd_scene format=3 uid="uid://6q8uayd4t3jc"]
+
+[ext_resource type="Theme" uid="uid://c0kttx6uymffl" path="res://scenes/ui/new_theme.tres" id="1_1fjsd"]
+[ext_resource type="Script" uid="uid://bc1pqmin1gv2n" path="res://scripts/fade_transition.gd" id="2_2hjor"]
+
+[sub_resource type="Animation" id="Animation_crctu"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FadeTransition:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_sn5u3"]
+resource_name = "fade_in"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FadeTransition:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_cn35j"]
+resource_name = "fade_out"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FadeTransition:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.03333333, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wko7x"]
+_data = {
+&"RESET": SubResource("Animation_crctu"),
+&"fade_in": SubResource("Animation_sn5u3"),
+&"fade_out": SubResource("Animation_cn35j")
+}
+
+[node name="FadeTransition" type="Panel" unique_id=854849442 groups=["fade_transition"]]
+modulate = Color(0, 0, 0, 1)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("1_1fjsd")
+script = ExtResource("2_2hjor")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1843817633]
+root_node = NodePath("../..")
+libraries/ = SubResource("AnimationLibrary_wko7x")
+autoplay = &"RESET"

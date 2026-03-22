@@ -1,0 +1,160 @@
+[gd_scene format=3 uid="uid://b5gyevv1tvjju"]
+
+[ext_resource type="Script" uid="uid://dwr663y0nxn0k" path="res://scripts/enemies/box_crab.gd" id="1_rpd3s"]
+[ext_resource type="Script" uid="uid://b4wr0ctkidk8d" path="res://scripts/state_machine.gd" id="2_jp0o4"]
+[ext_resource type="Script" uid="uid://mjlybgimuk62" path="res://scripts/enemy_walk_state.gd" id="3_jp0o4"]
+[ext_resource type="Script" uid="uid://6v8hrehld5ww" path="res://scripts/particale_system.gd" id="3_xwtt4"]
+[ext_resource type="Script" uid="uid://c2n4cc7xbb27l" path="res://scripts/dead_state.gd" id="4_p61fr"]
+[ext_resource type="Texture2D" uid="uid://cap4kbqi4gbwm" path="res://assets/sprites/box_crab.png" id="4_twug0"]
+[ext_resource type="Script" uid="uid://d0rktxyd1xhah" path="res://scripts/health_component.gd" id="5_p61fr"]
+[ext_resource type="Script" uid="uid://om87b5moexfv" path="res://scripts/enemy_fall_state.gd" id="5_rpd3s"]
+[ext_resource type="Script" uid="uid://bgliphpeitern" path="res://scripts/bullet_component.gd" id="6_rpd3s"]
+[ext_resource type="Script" uid="uid://dvnfnl8nc431g" path="res://scripts/enemy_jump_state.gd" id="6_xxk86"]
+[ext_resource type="PackedScene" uid="uid://c6lehj6gqn14g" path="res://scenes/essentials/deafult_point_light.tscn" id="8_xwtt4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xxk86"]
+size = Vector2(26, 26)
+
+[sub_resource type="Gradient" id="Gradient_rpd3s"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_xxk86"]
+gradient = SubResource("Gradient_rpd3s")
+width = 8
+height = 8
+
+[sub_resource type="Curve" id="Curve_ojd5o"]
+_limits = [-1.0, 2.2263489, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.24455208, 2.2263489), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_buamv"]
+_data = [Vector2(0, 1), 0.0, 2.7243865, 0, 0, Vector2(0.012106534, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rpd3s"]
+atlas = ExtResource("4_twug0")
+region = Rect2(0, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xxk86"]
+atlas = ExtResource("4_twug0")
+region = Rect2(0, 40, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ojd5o"]
+atlas = ExtResource("4_twug0")
+region = Rect2(40, 40, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_buamv"]
+atlas = ExtResource("4_twug0")
+region = Rect2(0, 80, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oy086"]
+atlas = ExtResource("4_twug0")
+region = Rect2(40, 80, 40, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tqqle"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rpd3s")
+}],
+"loop": true,
+"name": &"air",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xxk86")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ojd5o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_buamv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oy086")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 6.0
+}]
+
+[node name="BoxCrab" type="CharacterBody2D" unique_id=500536790 node_paths=PackedStringArray("collider", "state_machine", "particle_system", "sprite", "health_component", "bullet_component") groups=["enemy"]]
+collision_layer = 32
+collision_mask = 137
+script = ExtResource("1_rpd3s")
+collider = NodePath("CollisionShape2D")
+state_machine = NodePath("StateMachine")
+particle_system = NodePath("ParticleSystem")
+sprite = NodePath("AnimatedSprite2D")
+health_component = NodePath("HealthComponent")
+bullet_component = NodePath("BulletComponent")
+metadata/_custom_type_script = "uid://djdbkqexv6hp7"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=379425741]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_xxk86")
+
+[node name="StateMachine" type="Node" parent="." unique_id=17114452 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("2_jp0o4")
+initial_state = NodePath("EnemyFallState")
+metadata/_custom_type_script = "uid://b4wr0ctkidk8d"
+
+[node name="EnemyWalkState" type="Node" parent="StateMachine" unique_id=466232873]
+script = ExtResource("3_jp0o4")
+speed = 7.0
+metadata/_custom_type_script = "uid://mjlybgimuk62"
+
+[node name="DeadState" type="Node" parent="StateMachine" unique_id=703224915]
+script = ExtResource("4_p61fr")
+metadata/_custom_type_script = "uid://c2n4cc7xbb27l"
+
+[node name="EnemyFallState" type="Node" parent="StateMachine" unique_id=1086501572]
+script = ExtResource("5_rpd3s")
+metadata/_custom_type_script = "uid://om87b5moexfv"
+
+[node name="EnemyJumpState" type="Node" parent="StateMachine" unique_id=614412616]
+script = ExtResource("6_xxk86")
+metadata/_custom_type_script = "uid://dvnfnl8nc431g"
+
+[node name="ParticleSystem" type="Node2D" parent="." unique_id=1710495571]
+script = ExtResource("3_xwtt4")
+metadata/_custom_type_script = "uid://6v8hrehld5ww"
+
+[node name="Explode" type="CPUParticles2D" parent="ParticleSystem" unique_id=2113962620]
+emitting = false
+amount = 15
+texture = SubResource("GradientTexture2D_xxk86")
+one_shot = true
+explosiveness = 1.0
+spread = 180.0
+gravity = Vector2(0, 10)
+initial_velocity_max = 50.0
+angular_velocity_min = -720.0
+angular_velocity_max = 720.0
+orbit_velocity_min = -0.25
+orbit_velocity_max = 0.25
+linear_accel_min = -29.72
+linear_accel_max = -10.0
+linear_accel_curve = SubResource("Curve_ojd5o")
+scale_amount_curve = SubResource("Curve_buamv")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1933187252]
+sprite_frames = SubResource("SpriteFrames_tqqle")
+animation = &"air"
+autoplay = "walk"
+
+[node name="HealthComponent" type="Node" parent="." unique_id=1005176361]
+script = ExtResource("5_p61fr")
+max_health = 75.0
+metadata/_custom_type_script = "uid://d0rktxyd1xhah"
+
+[node name="BulletComponent" type="Node" parent="." unique_id=1020070870]
+script = ExtResource("6_rpd3s")
+metadata/_custom_type_script = "uid://bgliphpeitern"
+
+[node name="PointLight2D" parent="." unique_id=1135430492 instance=ExtResource("8_xwtt4")]
+color = Color(7.70092e-07, 0.558012, 0.89031583, 1)
+texture_scale = 0.5

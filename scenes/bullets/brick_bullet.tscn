@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://c47uihulrdgxh"]
+
+[ext_resource type="Script" uid="uid://cxa0kapw01sci" path="res://scripts/bullets/brick_bullet.gd" id="1_3j1xk"]
+[ext_resource type="Texture2D" uid="uid://cm0srwfqlxr82" path="res://assets/sprites/brick.png" id="2_3j1xk"]
+[ext_resource type="AudioStream" uid="uid://cjhjcc3hbraao" path="res://assets/sounds/punch.wav" id="3_0vcr5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_auuod"]
+radius = 4.0
+
+[node name="BrickBullet" type="Area2D" unique_id=2030815831]
+collision_layer = 8
+collision_mask = 33
+script = ExtResource("1_3j1xk")
+damage = 25.0
+rotate_sprite = true
+grav = 1500.0
+metadata/_custom_type_script = "uid://843qms4uqqqu"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=329171591]
+shape = SubResource("CircleShape2D_auuod")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1291603056]
+texture = ExtResource("2_3j1xk")
+
+[node name="HitSound" type="AudioStreamPlayer2D" parent="." unique_id=806224482]
+stream = ExtResource("3_0vcr5")
+bus = &"SFX"

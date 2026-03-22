@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://cryko72sx7fwl"]
+
+[ext_resource type="Script" uid="uid://c2o387p1mip0k" path="res://scripts/weapons/player_punch.gd" id="1_n160a"]
+[ext_resource type="AudioStream" uid="uid://cjhjcc3hbraao" path="res://assets/sounds/punch.wav" id="2_31i6v"]
+[ext_resource type="Script" uid="uid://6p2g2ykbnv7l" path="res://scripts/despawn_component.gd" id="3_dpyxg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n160a"]
+
+[node name="PlayerPunch" type="Node2D" unique_id=1478148768 node_paths=PackedStringArray("shoot_sfx")]
+script = ExtResource("1_n160a")
+initial_ammo = 1
+reload_time = 0.5
+hold_distance = 50.0
+shoot_sfx = NodePath("ShootSound")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=739297865]
+collision_layer = 4
+collision_mask = 50
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1932671018]
+shape = SubResource("RectangleShape2D_n160a")
+
+[node name="ShootSound" type="AudioStreamPlayer2D" parent="." unique_id=1911805584]
+stream = ExtResource("2_31i6v")
+bus = &"SFX"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=197330235]
+
+[node name="DespawnComponent" type="Node" parent="." unique_id=1795738484]
+script = ExtResource("3_dpyxg")
+metadata/_custom_type_script = "uid://6p2g2ykbnv7l"

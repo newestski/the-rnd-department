@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://b3db23b2hfymy"]
+
+[ext_resource type="Script" uid="uid://t8i4e6ig3xxg" path="res://scripts/navigation_character.gd" id="1_frcvx"]
+[ext_resource type="Script" uid="uid://6v8hrehld5ww" path="res://scripts/particale_system.gd" id="2_x1j3a"]
+[ext_resource type="Script" uid="uid://d0rktxyd1xhah" path="res://scripts/health_component.gd" id="3_1wwpg"]
+[ext_resource type="Texture2D" uid="uid://m1ywj2i1f18v" path="res://assets/sprites/test_enemy_1.png" id="4_asbfj"]
+[ext_resource type="Script" uid="uid://b4wr0ctkidk8d" path="res://scripts/state_machine.gd" id="4_tf3a8"]
+[ext_resource type="Script" uid="uid://c2n4cc7xbb27l" path="res://scripts/dead_state.gd" id="5_8ybkn"]
+[ext_resource type="Script" uid="uid://cmjntyylk8i1f" path="res://scripts/basic_nav_state.gd" id="7_frcvx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8s75x"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_exfs3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_asbfj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="TestEnemy" type="CharacterBody2D" unique_id=2056284550 node_paths=PackedStringArray("collider", "state_machine", "particle_system", "sprite", "health_component")]
+collision_layer = 32
+script = ExtResource("1_frcvx")
+collider = NodePath("CollisionShape2D")
+state_machine = NodePath("StateMachine")
+particle_system = NodePath("ParticleSystem")
+sprite = NodePath("AnimatedSprite2D")
+health_component = NodePath("HealthComponent")
+metadata/_custom_type_script = "uid://t8i4e6ig3xxg"
+
+[node name="ParticleSystem" type="Node2D" parent="." unique_id=1918741754]
+script = ExtResource("2_x1j3a")
+metadata/_custom_type_script = "uid://6v8hrehld5ww"
+
+[node name="HealthComponent" type="Node" parent="." unique_id=974157720 node_paths=PackedStringArray("death_state")]
+script = ExtResource("3_1wwpg")
+max_health = 30.0
+death_state = NodePath("../StateMachine/DeadState")
+metadata/_custom_type_script = "uid://d0rktxyd1xhah"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=51746218]
+shape = SubResource("RectangleShape2D_8s75x")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=688844103]
+sprite_frames = SubResource("SpriteFrames_exfs3")
+
+[node name="StateMachine" type="Node" parent="." unique_id=1643743880 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("4_tf3a8")
+initial_state = NodePath("BasicNavState")
+metadata/_custom_type_script = "uid://b4wr0ctkidk8d"
+
+[node name="DeadState" type="Node" parent="StateMachine" unique_id=20121437]
+script = ExtResource("5_8ybkn")
+metadata/_custom_type_script = "uid://c2n4cc7xbb27l"
+
+[node name="BasicNavState" type="Node" parent="StateMachine" unique_id=447375076]
+script = ExtResource("7_frcvx")
+metadata/_custom_type_script = "uid://cmjntyylk8i1f"
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1109137210]
+path_metadata_flags = 1
+debug_enabled = true

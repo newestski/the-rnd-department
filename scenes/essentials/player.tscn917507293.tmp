@@ -1,0 +1,54 @@
+[gd_scene load_steps=8 format=3 uid="uid://dau4j2bg67hku"]
+
+[ext_resource type="Script" uid="uid://b4wr0ctkidk8d" path="res://scripts/state_machine.gd" id="1_0xpgj"]
+[ext_resource type="Script" uid="uid://h6ekr4jv2070" path="res://scripts/idle_state.gd" id="2_jhbw6"]
+[ext_resource type="Script" uid="uid://c63r3qnbv2d5j" path="res://scripts/air_state.gd" id="3_o1j6d"]
+[ext_resource type="Script" uid="uid://bywx3xquvarmg" path="res://scripts/walk_state.gd" id="4_2dhq1"]
+[ext_resource type="Script" uid="uid://cdx43n5r8ehyo" path="res://scripts/jump_state.gd" id="5_jhbw6"]
+[ext_resource type="Script" uid="uid://dt6pk3dwxldut" path="res://scripts/wallslide_state.gd" id="6_o1j6d"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sh265"]
+height = 34.0
+
+[node name="Player" type="CharacterBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_sh265")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -17.0
+offset_right = 10.0
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("1_0xpgj")
+initial_state = NodePath("AirState")
+metadata/_custom_type_script = "uid://b4wr0ctkidk8d"
+
+[node name="IdleState" type="Node" parent="StateMachine"]
+script = ExtResource("2_jhbw6")
+metadata/_custom_type_script = "uid://h6ekr4jv2070"
+
+[node name="WalkState" type="Node" parent="StateMachine"]
+script = ExtResource("4_2dhq1")
+metadata/_custom_type_script = "uid://bywx3xquvarmg"
+
+[node name="AirState" type="Node" parent="StateMachine"]
+script = ExtResource("3_o1j6d")
+metadata/_custom_type_script = "uid://c63r3qnbv2d5j"
+
+[node name="JumpState" type="Node" parent="StateMachine"]
+script = ExtResource("5_jhbw6")
+metadata/_custom_type_script = "uid://cdx43n5r8ehyo"
+
+[node name="WallslideState" type="Node" parent="StateMachine"]
+script = ExtResource("6_o1j6d")
+metadata/_custom_type_script = "uid://dt6pk3dwxldut"

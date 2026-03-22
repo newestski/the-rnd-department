@@ -1,0 +1,135 @@
+[gd_scene format=3 uid="uid://c4dx4e0h0i8wl"]
+
+[ext_resource type="Script" uid="uid://bkxb4tdvp8h4p" path="res://scripts/bullets/black_hole.gd" id="1_siva2"]
+
+[sub_resource type="Gradient" id="Gradient_siva2"]
+offsets = PackedFloat32Array(0, 0.754717, 0.8679245, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1, 7.2662134, 0.31169632, 0, 0.61538464, 1, 1, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_an8o8"]
+gradient = SubResource("Gradient_siva2")
+fill = 1
+fill_from = Vector2(0.5, 0.5058824)
+fill_to = Vector2(0.15882353, 0.8117647)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_siva2"]
+radius = 21.0
+
+[sub_resource type="Animation" id="Animation_siva2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_kb311"]
+resource_name = "despawn"
+length = 1.0333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1.3195114, 0.08537753),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_xhycd"]
+resource_name = "loom"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.05, 1.05)]
+}
+
+[sub_resource type="Animation" id="Animation_an8o8"]
+resource_name = "spawn"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.08537753, 0.012691463),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(1, 1)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"animation"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xhycd"]
+_data = {
+&"RESET": SubResource("Animation_siva2"),
+&"despawn": SubResource("Animation_kb311"),
+&"loom": SubResource("Animation_xhycd"),
+&"spawn": SubResource("Animation_an8o8")
+}
+
+[node name="BlackHole" type="Area2D" unique_id=2025680140]
+collision_layer = 8
+collision_mask = 36
+script = ExtResource("1_siva2")
+damage = 100.0
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=625835636]
+texture = SubResource("GradientTexture2D_an8o8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1396431799]
+shape = SubResource("CircleShape2D_siva2")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1215834972]
+libraries/ = SubResource("AnimationLibrary_xhycd")
+
+[node name="Timer" type="Timer" parent="." unique_id=632184363]
+wait_time = 10.0
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

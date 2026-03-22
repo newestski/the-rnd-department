@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://bbnbbcntmcbl5"]
+
+[ext_resource type="Script" uid="uid://nnj5w37cwn4d" path="res://scenes/ui/weapon_slot.gd" id="1_615ci"]
+[ext_resource type="Texture2D" uid="uid://46khef1rvr8q" path="res://assets/sprites/lame_gun.png" id="1_a3sf7"]
+[ext_resource type="Theme" uid="uid://c0kttx6uymffl" path="res://scenes/ui/new_theme.tres" id="2_aolmy"]
+
+[node name="WeaponSlot" type="Control" unique_id=1618289980]
+custom_minimum_size = Vector2(32, 32)
+layout_direction = 2
+layout_mode = 3
+anchors_preset = 0
+offset_right = 32.0
+offset_bottom = 32.0
+script = ExtResource("1_615ci")
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=702908632]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_aolmy")
+max_value = 1.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="." unique_id=314873727]
+layout_mode = 0
+offset_left = 1.0
+offset_right = 31.0
+offset_bottom = 32.0
+theme = ExtResource("2_aolmy")
+text = "0/0
+"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=16244969]
+clip_contents = true
+custom_minimum_size = Vector2(8, 8)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+texture = ExtResource("1_a3sf7")
+expand_mode = 1
+stretch_mode = 1

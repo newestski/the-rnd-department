@@ -1,0 +1,302 @@
+[gd_scene format=3 uid="uid://dau4j2bg67hku"]
+
+[ext_resource type="Script" uid="uid://b4wr0ctkidk8d" path="res://scripts/state_machine.gd" id="1_0xpgj"]
+[ext_resource type="Script" uid="uid://bnpeooj1vfeqj" path="res://scripts/player.gd" id="1_pf05p"]
+[ext_resource type="Script" uid="uid://h6ekr4jv2070" path="res://scripts/idle_state.gd" id="2_jhbw6"]
+[ext_resource type="Script" uid="uid://c63r3qnbv2d5j" path="res://scripts/air_state.gd" id="3_o1j6d"]
+[ext_resource type="Script" uid="uid://bywx3xquvarmg" path="res://scripts/walk_state.gd" id="4_2dhq1"]
+[ext_resource type="Script" uid="uid://cdx43n5r8ehyo" path="res://scripts/jump_state.gd" id="5_jhbw6"]
+[ext_resource type="Script" uid="uid://dt6pk3dwxldut" path="res://scripts/wallslide_state.gd" id="6_o1j6d"]
+[ext_resource type="Script" uid="uid://ctoicd50afv00" path="res://scripts/wall_push_state.gd" id="7_2dhq1"]
+[ext_resource type="Script" uid="uid://7p7sboy0ticf" path="res://scripts/slide_state.gd" id="9_por61"]
+[ext_resource type="Texture2D" uid="uid://h564yjoof4i2" path="res://assets/sprites/character.png" id="10_por61"]
+[ext_resource type="PackedScene" uid="uid://c6lehj6gqn14g" path="res://scenes/essentials/deafult_point_light.tscn" id="11_gyys0"]
+[ext_resource type="Script" uid="uid://6v8hrehld5ww" path="res://scripts/particale_system.gd" id="11_wfjt8"]
+[ext_resource type="Script" uid="uid://0s00qng1i7nv" path="res://scripts/weapon_component.gd" id="12_uqnwg"]
+[ext_resource type="Script" uid="uid://d0rktxyd1xhah" path="res://scripts/health_component.gd" id="13_cv7gw"]
+[ext_resource type="Script" uid="uid://bgliphpeitern" path="res://scripts/bullet_component.gd" id="14_0q3k6"]
+[ext_resource type="PackedScene" uid="uid://cryko72sx7fwl" path="res://scenes/player_punch.tscn" id="16_fkx05"]
+[ext_resource type="Script" uid="uid://bop0buftgou5c" path="res://scripts/sound_component.gd" id="17_j6ure"]
+[ext_resource type="AudioStream" uid="uid://cteqdbxbs1w5a" path="res://assets/sounds/step.wav" id="18_y8iyt"]
+[ext_resource type="AudioStream" uid="uid://baj4pjkccdadc" path="res://assets/sounds/jump.wav" id="19_y8iyt"]
+[ext_resource type="AudioStream" uid="uid://collsyn0lkbbu" path="res://assets/sounds/swoosh.wav" id="20_pdb8b"]
+[ext_resource type="AudioStream" uid="uid://dr2bhb85fufnm" path="res://assets/sounds/hitHurt.wav" id="21_d2hik"]
+[ext_resource type="AudioStream" uid="uid://cjhjcc3hbraao" path="res://assets/sounds/punch.wav" id="22_nqj1t"]
+[ext_resource type="AudioStream" uid="uid://cwg7ng4qh077x" path="res://assets/sounds/explosion.wav" id="23_aeweg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2dhq1"]
+size = Vector2(8, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pf05p"]
+atlas = ExtResource("10_por61")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wfjt8"]
+atlas = ExtResource("10_por61")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uqnwg"]
+atlas = ExtResource("10_por61")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cv7gw"]
+atlas = ExtResource("10_por61")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0q3k6"]
+atlas = ExtResource("10_por61")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gyys0"]
+atlas = ExtResource("10_por61")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fkx05"]
+atlas = ExtResource("10_por61")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_73gio"]
+atlas = ExtResource("10_por61")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_por61"]
+atlas = ExtResource("10_por61")
+region = Rect2(96, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j6ure"]
+atlas = ExtResource("10_por61")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fkx05"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pf05p")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wfjt8")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uqnwg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cv7gw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0q3k6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gyys0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fkx05")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_73gio")
+}],
+"loop": true,
+"name": &"running",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_por61")
+}],
+"loop": true,
+"name": &"slide",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j6ure")
+}],
+"loop": true,
+"name": &"wall_slide",
+"speed": 5.0
+}]
+
+[sub_resource type="Curve" id="Curve_por61"]
+_data = [Vector2(0.00568181, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.382023), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_wfjt8"]
+offsets = PackedFloat32Array(0, 0.0266667, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0)
+
+[node name="Player" type="CharacterBody2D" unique_id=254024136 node_paths=PackedStringArray("collider", "state_machine", "particle_system", "sprite", "health_component", "bullet_component") groups=["player"]]
+z_index = 1
+collision_layer = 2
+collision_mask = 69
+script = ExtResource("1_pf05p")
+collider = NodePath("CollisionShape2D")
+state_machine = NodePath("StateMachine")
+particle_system = NodePath("ParticleSystem")
+sprite = NodePath("AnimatedSprite2D")
+health_component = NodePath("HealthComponent")
+bullet_component = NodePath("BulletComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=108652273]
+position = Vector2(0, 5)
+shape = SubResource("RectangleShape2D_2dhq1")
+
+[node name="StateMachine" type="Node" parent="." unique_id=1032490893 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("1_0xpgj")
+initial_state = NodePath("AirState")
+metadata/_custom_type_script = "uid://b4wr0ctkidk8d"
+
+[node name="IdleState" type="Node" parent="StateMachine" unique_id=61414285]
+script = ExtResource("2_jhbw6")
+metadata/_custom_type_script = "uid://h6ekr4jv2070"
+
+[node name="WalkState" type="Node" parent="StateMachine" unique_id=1609031633]
+script = ExtResource("4_2dhq1")
+metadata/_custom_type_script = "uid://bywx3xquvarmg"
+
+[node name="AirState" type="Node" parent="StateMachine" unique_id=1439581284]
+script = ExtResource("3_o1j6d")
+metadata/_custom_type_script = "uid://c63r3qnbv2d5j"
+
+[node name="JumpState" type="Node" parent="StateMachine" unique_id=730670401]
+script = ExtResource("5_jhbw6")
+metadata/_custom_type_script = "uid://cdx43n5r8ehyo"
+
+[node name="WallslideState" type="Node" parent="StateMachine" unique_id=854654862]
+script = ExtResource("6_o1j6d")
+metadata/_custom_type_script = "uid://dt6pk3dwxldut"
+
+[node name="WallPushState" type="Node" parent="StateMachine" unique_id=1392334141]
+script = ExtResource("7_2dhq1")
+metadata/_custom_type_script = "uid://ctoicd50afv00"
+
+[node name="SlideState" type="Node" parent="StateMachine" unique_id=1101130551]
+script = ExtResource("9_por61")
+metadata/_custom_type_script = "uid://7p7sboy0ticf"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=350302968]
+sprite_frames = SubResource("SpriteFrames_fkx05")
+animation = &"slide"
+autoplay = "idle"
+
+[node name="PointLight2D" parent="." unique_id=1135430492 instance=ExtResource("11_gyys0")]
+position = Vector2(0, 1)
+energy = 2.0
+
+[node name="ParticleSystem" type="Node2D" parent="." unique_id=1963605095]
+script = ExtResource("11_wfjt8")
+metadata/_custom_type_script = "uid://6v8hrehld5ww"
+
+[node name="RunningParticles" type="CPUParticles2D" parent="ParticleSystem" unique_id=1736408014]
+position = Vector2(0, 13)
+emitting = false
+amount = 25
+lifetime = 2.0
+randomness = 1.0
+emission_shape = 1
+emission_sphere_radius = 5.0
+direction = Vector2(0, -1)
+gravity = Vector2(0, 10)
+initial_velocity_max = 20.0
+scale_amount_min = 2.0
+scale_amount_max = 3.0
+scale_amount_curve = SubResource("Curve_por61")
+color_ramp = SubResource("Gradient_wfjt8")
+
+[node name="JumpParticles" type="CPUParticles2D" parent="ParticleSystem" unique_id=2047010888]
+position = Vector2(0, 13)
+emitting = false
+amount = 10
+lifetime = 2.0
+one_shot = true
+speed_scale = 3.0
+explosiveness = 1.0
+randomness = 1.0
+emission_shape = 3
+emission_rect_extents = Vector2(5, 0)
+direction = Vector2(0, -1)
+gravity = Vector2(0, 10)
+initial_velocity_max = 20.0
+scale_amount_min = 2.0
+scale_amount_max = 3.0
+scale_amount_curve = SubResource("Curve_por61")
+color_ramp = SubResource("Gradient_wfjt8")
+
+[node name="WallSlideParticles" type="CPUParticles2D" parent="ParticleSystem" unique_id=1509921564]
+position = Vector2(4, 5)
+emitting = false
+amount = 25
+lifetime = 2.0
+randomness = 1.0
+emission_shape = 1
+emission_sphere_radius = 5.0
+direction = Vector2(0, -1)
+gravity = Vector2(0, 10)
+initial_velocity_max = 20.0
+scale_amount_min = 2.0
+scale_amount_max = 3.0
+scale_amount_curve = SubResource("Curve_por61")
+color_ramp = SubResource("Gradient_wfjt8")
+
+[node name="WeaponComponent" type="Node2D" parent="." unique_id=1559612639 node_paths=PackedStringArray("deafult_weapon")]
+script = ExtResource("12_uqnwg")
+deafult_weapon = NodePath("../PlayerPunch")
+max_weapons = 1
+metadata/_custom_type_script = "uid://0s00qng1i7nv"
+
+[node name="HealthComponent" type="Node" parent="." unique_id=2074765949]
+script = ExtResource("13_cv7gw")
+metadata/_custom_type_script = "uid://d0rktxyd1xhah"
+
+[node name="BulletComponent" type="Node" parent="." unique_id=1878420967]
+script = ExtResource("14_0q3k6")
+metadata/_custom_type_script = "uid://bgliphpeitern"
+
+[node name="PlayerPunch" parent="." unique_id=1478148768 instance=ExtResource("16_fkx05")]
+top_level = true
+initial_ammo = 2
+hold_distance = 0.0
+damage = 20.0
+
+[node name="SoundComponent" type="Node2D" parent="." unique_id=555243134]
+process_mode = 3
+script = ExtResource("17_j6ure")
+
+[node name="StepSound" type="AudioStreamPlayer2D" parent="SoundComponent" unique_id=1915041212]
+stream = ExtResource("18_y8iyt")
+volume_db = -1.51
+bus = &"SFX"
+
+[node name="JumpSound" type="AudioStreamPlayer2D" parent="SoundComponent" unique_id=1443729863]
+stream = ExtResource("19_y8iyt")
+volume_db = -10.83
+bus = &"SFX"
+
+[node name="SwooshSound" type="AudioStreamPlayer2D" parent="SoundComponent" unique_id=813871997]
+stream = ExtResource("20_pdb8b")
+volume_db = -10.83
+bus = &"SFX"
+
+[node name="HurtSound" type="AudioStreamPlayer2D" parent="SoundComponent" unique_id=797665168]
+stream = ExtResource("21_d2hik")
+volume_db = 8.079
+bus = &"SFX"
+
+[node name="ThrowSound" type="AudioStreamPlayer2D" parent="SoundComponent" unique_id=873434893]
+stream = ExtResource("22_nqj1t")
+bus = &"SFX"
+
+[node name="DieSound" type="AudioStreamPlayer2D" parent="SoundComponent" unique_id=466996982]
+stream = ExtResource("23_aeweg")
+bus = &"SFX"
+
+[connection signal="damaged" from="HealthComponent" to="." method="_on_health_component_damaged"]
+[connection signal="death" from="HealthComponent" to="." method="_on_health_component_death"]

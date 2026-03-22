@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://bcufwrt80fjlh"]
+
+[ext_resource type="Script" uid="uid://ba7fwxyhk4kit" path="res://scripts/weapons/test_weapon.gd" id="1_8oefd"]
+[ext_resource type="Texture2D" uid="uid://46khef1rvr8q" path="res://assets/sprites/lame_gun.png" id="2_bq81q"]
+[ext_resource type="AudioStream" uid="uid://dcjd02ykbj3n3" path="res://assets/sounds/shoot2.wav" id="3_rrv11"]
+[ext_resource type="Script" uid="uid://6p2g2ykbnv7l" path="res://scripts/despawn_component.gd" id="4_2tnb3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8oefd"]
+
+[node name="TestWeapon" type="Node2D" unique_id=275311966 node_paths=PackedStringArray("shoot_sfx")]
+script = ExtResource("1_8oefd")
+initial_ammo = 5
+reload_time = 0.25
+hold_distance = 20.0
+shoot_sfx = NodePath("ShootSound")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1582522442]
+collision_layer = 4
+collision_mask = 35
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=647889515]
+shape = SubResource("RectangleShape2D_8oefd")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1145388231]
+texture = ExtResource("2_bq81q")
+
+[node name="ShootSound" type="AudioStreamPlayer2D" parent="." unique_id=397016001]
+stream = ExtResource("3_rrv11")
+bus = &"SFX"
+
+[node name="DespawnComponent" type="Node" parent="." unique_id=1713045656]
+script = ExtResource("4_2tnb3")
+time_between_flashes = 0.05

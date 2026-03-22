@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://dtww8pcd0qe50"]
+
+[ext_resource type="Script" uid="uid://b73v8b0ac27of" path="res://scripts/weapons/health_kit.gd" id="1_eg37o"]
+[ext_resource type="Texture2D" uid="uid://b65bei4ln5v51" path="res://assets/sprites/medical_juice.png" id="2_eg37o"]
+[ext_resource type="Script" uid="uid://6p2g2ykbnv7l" path="res://scripts/despawn_component.gd" id="3_rmluq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rmluq"]
+
+[node name="HealthKit" type="Node2D" unique_id=1966020278]
+script = ExtResource("1_eg37o")
+initial_ammo = 1
+reload_time = 0.0
+hold_distance = 20.0
+metadata/_custom_type_script = "uid://bfog4w7i6tan1"
+
+[node name="Area2D" type="Area2D" parent="." unique_id=565183807]
+collision_layer = 4
+collision_mask = 35
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1529960953]
+shape = SubResource("RectangleShape2D_rmluq")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2043040546]
+texture = ExtResource("2_eg37o")
+hframes = 2
+
+[node name="DespawnComponent" type="Node" parent="." unique_id=1523075456]
+script = ExtResource("3_rmluq")
+time_between_flashes = 0.05

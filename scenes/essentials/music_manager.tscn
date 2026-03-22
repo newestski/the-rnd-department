@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://cfb8q7i7fqy7j"]
+
+[ext_resource type="Script" uid="uid://qirc30w3x106" path="res://scripts/music_manager.gd" id="1_ubd4y"]
+[ext_resource type="AudioStream" uid="uid://duchyl0m6sop8" path="res://assets/sounds/danger_loop.wav" id="2_4o755"]
+[ext_resource type="AudioStream" uid="uid://7cluyryyhert" path="res://assets/sounds/supermarket_purgatory.wav" id="3_8507d"]
+
+[node name="MusicManager" type="Node" unique_id=351556565]
+process_mode = 3
+script = ExtResource("1_ubd4y")
+
+[node name="DangerLoop1" type="AudioStreamPlayer" parent="." unique_id=1489069125]
+stream = ExtResource("2_4o755")
+volume_db = -9.264
+bus = &"Music"
+
+[node name="MenuLoop" type="AudioStreamPlayer" parent="." unique_id=94502313]
+stream = ExtResource("3_8507d")
+bus = &"Music"

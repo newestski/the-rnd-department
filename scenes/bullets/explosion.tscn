@@ -1,0 +1,91 @@
+[gd_scene format=3 uid="uid://03bxvik3sqw5"]
+
+[ext_resource type="Script" uid="uid://h6rg3y34ov7h" path="res://scripts/bullets/explosion.gd" id="1_gsvrn"]
+[ext_resource type="AudioStream" uid="uid://cwg7ng4qh077x" path="res://assets/sounds/explosion.wav" id="2_2ydpy"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gsvrn"]
+radius = 31.016125
+
+[sub_resource type="Gradient" id="Gradient_2ydpy"]
+offsets = PackedFloat32Array(0, 0.96930945, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_npy6q"]
+gradient = SubResource("Gradient_2ydpy")
+fill = 1
+fill_from = Vector2(0.508547, 0.491453)
+fill_to = Vector2(0.491453, 0)
+
+[sub_resource type="Animation" id="Animation_gsvrn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_2ydpy"]
+resource_name = "explosion"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.26666668),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 0, 0, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_npy6q"]
+_data = {
+&"RESET": SubResource("Animation_gsvrn"),
+&"explosion": SubResource("Animation_2ydpy")
+}
+
+[node name="Explosion" type="Area2D" unique_id=1557338783]
+collision_layer = 24
+collision_mask = 34
+script = ExtResource("1_gsvrn")
+damage = 35.0
+metadata/_custom_type_script = "uid://843qms4uqqqu"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1570686607]
+shape = SubResource("CircleShape2D_gsvrn")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=30564489]
+modulate = Color(1, 0, 0, 1)
+texture = SubResource("GradientTexture2D_npy6q")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D" unique_id=983876528]
+root_node = NodePath("../..")
+libraries/ = SubResource("AnimationLibrary_npy6q")
+autoplay = &"explosion"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1647611186]
+stream = ExtResource("2_2ydpy")
+volume_db = -10.0
+autoplay = true

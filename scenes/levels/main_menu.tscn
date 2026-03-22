@@ -1,0 +1,158 @@
+[gd_scene format=3 uid="uid://524bhptpj6ad"]
+
+[ext_resource type="Theme" uid="uid://c0kttx6uymffl" path="res://scenes/ui/new_theme.tres" id="1_geflf"]
+[ext_resource type="Script" uid="uid://brxwfvyn1owyb" path="res://scripts/play_button.gd" id="2_fkd6t"]
+[ext_resource type="Script" uid="uid://dxlxdk7w3cgla" path="res://scripts/settings_button.gd" id="3_keln3"]
+[ext_resource type="PackedScene" uid="uid://dd1xvk6sjmngj" path="res://scenes/essentials/settings_menu.tscn" id="4_crctu"]
+[ext_resource type="Script" uid="uid://o8fkx4p2brhp" path="res://scripts/exit_button.gd" id="4_sn5u3"]
+[ext_resource type="PackedScene" uid="uid://bhs71u2oqq614" path="res://scenes/levels/menu_camera_scroll.tscn" id="5_fkd6t"]
+[ext_resource type="PackedScene" uid="uid://6q8uayd4t3jc" path="res://scenes/ui/fade_transition.tscn" id="6_keln3"]
+[ext_resource type="Script" uid="uid://cepxeia1xnj7h" path="res://scripts/credits_menu.gd" id="8_sn5u3"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_crctu"]
+viewport_path = NodePath("SubViewport")
+
+[node name="MainMenu" type="Control" unique_id=40243430 groups=["main_ui"]]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_geflf")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=371717739]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Control" type="Control" parent="MarginContainer" unique_id=389696206]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control" unique_id=945008605]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -44.0
+offset_right = 88.0
+grow_vertical = 0
+
+[node name="PlayButton" type="Button" parent="MarginContainer/Control/VBoxContainer" unique_id=81966321]
+layout_mode = 2
+text = "Play"
+script = ExtResource("2_fkd6t")
+
+[node name="SettingsButton" type="Button" parent="MarginContainer/Control/VBoxContainer" unique_id=1762926012]
+layout_mode = 2
+text = "Settings"
+script = ExtResource("3_keln3")
+
+[node name="CreditsButton" type="Button" parent="MarginContainer/Control/VBoxContainer" unique_id=836620869]
+layout_mode = 2
+text = "Credits"
+
+[node name="ExitButton" type="Button" parent="MarginContainer/Control/VBoxContainer" unique_id=346386706]
+layout_mode = 2
+text = "Exit"
+script = ExtResource("4_sn5u3")
+
+[node name="Title" type="Label" parent="MarginContainer/Control" unique_id=595959365]
+layout_mode = 0
+offset_top = 4.0
+offset_right = 240.0
+offset_bottom = 39.0
+theme_override_font_sizes/font_size = 16
+text = "The R&D Department
+"
+
+[node name="SettingsMenu" parent="." unique_id=844826488 instance=ExtResource("4_crctu")]
+visible = false
+layout_mode = 1
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1383498473]
+layer = -1
+follow_viewport_enabled = true
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer" unique_id=1530721701]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = SubResource("ViewportTexture_crctu")
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=1912908218]
+disable_3d = true
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+
+[node name="MenuCameraScroll" parent="SubViewport" unique_id=1825750716 instance=ExtResource("5_fkd6t")]
+
+[node name="FadeTransition" parent="." unique_id=854849442 instance=ExtResource("6_keln3")]
+z_index = 10
+layout_mode = 1
+
+[node name="CreditsMenu" type="PanelContainer" parent="." unique_id=41359778]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("8_sn5u3")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CreditsMenu" unique_id=789120604]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="CreditsMenu/VBoxContainer" unique_id=1354604415]
+layout_mode = 2
+text = "Credits:"
+horizontal_alignment = 1
+
+[node name="Control" type="Control" parent="CreditsMenu/VBoxContainer" unique_id=984887245]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CreditsMenu/VBoxContainer" unique_id=1435000113]
+layout_mode = 2
+text = "Developed by Newestski
+
+Made in the Godot Engine
+Sounds made in jsfxr
+Music made in BeatBox
+Font is Pixel Operator 8"
+
+[node name="Control" type="Control" parent="CreditsMenu" unique_id=1906073967]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="ExitButton" type="Button" parent="CreditsMenu/Control" unique_id=961547937]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 0.078
+offset_left = -12.0
+offset_top = 1.0
+offset_right = -1.0
+offset_bottom = 6.0079994
+grow_horizontal = 0
+text = "X"
+
+[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/PlayButton" to="MarginContainer/Control/VBoxContainer/PlayButton" method="_on_pressed"]
+[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/SettingsButton" to="MarginContainer/Control/VBoxContainer/SettingsButton" method="_on_pressed"]
+[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/CreditsButton" to="CreditsMenu" method="_on_credits_button_pressed"]
+[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/ExitButton" to="MarginContainer/Control/VBoxContainer/ExitButton" method="_on_pressed"]
+[connection signal="pressed" from="CreditsMenu/Control/ExitButton" to="CreditsMenu" method="_on_exit_button_pressed"]

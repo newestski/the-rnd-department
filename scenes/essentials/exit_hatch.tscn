@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://cqdhtgkei75ap"]
+
+[ext_resource type="Texture2D" uid="uid://bkp7n36lct1ym" path="res://assets/sprites/big_door.png" id="1_nlkv4"]
+[ext_resource type="Script" uid="uid://thtr45l2qbk1" path="res://scripts/exit_hatch.gd" id="1_uhhe0"]
+[ext_resource type="Script" uid="uid://d0rktxyd1xhah" path="res://scripts/health_component.gd" id="2_uhhe0"]
+[ext_resource type="Theme" uid="uid://c0kttx6uymffl" path="res://scenes/ui/new_theme.tres" id="4_alvv4"]
+[ext_resource type="Script" uid="uid://dsthjitsstwpd" path="res://scripts/exit_health_bar.gd" id="5_pg866"]
+[ext_resource type="Script" uid="uid://bop0buftgou5c" path="res://scripts/sound_component.gd" id="6_o7lpj"]
+[ext_resource type="AudioStream" uid="uid://chwrmukv306lx" path="res://assets/sounds/blip.wav" id="7_7i3s2"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_alvv4"]
+radius = 35.089172
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_alvv4"]
+size = Vector2(106, 114)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pg866"]
+bg_color = Color(0.1882353, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7flh3"]
+bg_color = Color(0.7882353, 0, 0.011764706, 1)
+
+[node name="StaticBody2D" type="StaticBody2D" unique_id=1280592439 groups=["enemy_target"]]
+collision_layer = 128
+collision_mask = 0
+script = ExtResource("1_uhhe0")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1638248593]
+texture = ExtResource("1_nlkv4")
+hframes = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1825376679]
+position = Vector2(0, 3)
+shape = SubResource("CircleShape2D_alvv4")
+
+[node name="HealthComponent" type="Node" parent="." unique_id=1402364445]
+script = ExtResource("2_uhhe0")
+max_health = 1000.0
+metadata/_custom_type_script = "uid://d0rktxyd1xhah"
+
+[node name="Area2D" type="Area2D" parent="." unique_id=504766191]
+position = Vector2(-9, 1)
+collision_layer = 48
+collision_mask = 48
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D" unique_id=1042415136]
+position = Vector2(9, 3)
+shape = SubResource("RectangleShape2D_alvv4")
+
+[node name="Timer" type="Timer" parent="." unique_id=714000585]
+autostart = true
+
+[node name="ExitHealthBar" type="ProgressBar" parent="." unique_id=1042013325]
+offset_left = -40.0
+offset_top = -58.0
+offset_right = 40.0
+offset_bottom = -44.0
+theme = ExtResource("4_alvv4")
+theme_override_styles/background = SubResource("StyleBoxFlat_pg866")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7flh3")
+value = 100.0
+script = ExtResource("5_pg866")
+metadata/_edit_use_anchors_ = true
+
+[node name="SoundComponent" type="Node2D" parent="." unique_id=1140258339]
+script = ExtResource("6_o7lpj")
+metadata/_custom_type_script = "uid://bop0buftgou5c"
+
+[node name="HitSound" type="AudioStreamPlayer2D" parent="SoundComponent" unique_id=1433026319]
+stream = ExtResource("7_7i3s2")
+bus = &"SFX"
+
+[connection signal="damaged" from="HealthComponent" to="." method="_on_health_component_damaged"]
+[connection signal="damaged" from="HealthComponent" to="ExitHealthBar" method="_on_health_component_damaged"]
+[connection signal="death" from="HealthComponent" to="." method="_on_health_component_death"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

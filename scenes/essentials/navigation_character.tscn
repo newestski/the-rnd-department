@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://bn3n55fsp81ww"]
+
+[ext_resource type="Script" uid="uid://t8i4e6ig3xxg" path="res://scripts/navigation_character.gd" id="1_ujo76"]
+[ext_resource type="Script" uid="uid://6v8hrehld5ww" path="res://scripts/particale_system.gd" id="2_xtlcr"]
+[ext_resource type="Script" uid="uid://d0rktxyd1xhah" path="res://scripts/health_component.gd" id="3_mxvo0"]
+[ext_resource type="Texture2D" uid="uid://m1ywj2i1f18v" path="res://assets/sprites/test_enemy_1.png" id="4_ggvf5"]
+[ext_resource type="Script" uid="uid://b4wr0ctkidk8d" path="res://scripts/state_machine.gd" id="5_u08da"]
+[ext_resource type="Script" uid="uid://c2n4cc7xbb27l" path="res://scripts/dead_state.gd" id="6_eyy4a"]
+[ext_resource type="Script" uid="uid://cmjntyylk8i1f" path="res://scripts/basic_nav_state.gd" id="7_dchlg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_li03d"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_glq2b"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_ggvf5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="NavigationCharacter" type="CharacterBody2D" unique_id=1672637593]
+script = ExtResource("1_ujo76")
+metadata/_custom_type_script = "uid://t8i4e6ig3xxg"
+
+[node name="ParticleSystem" type="Node2D" parent="." unique_id=1714994978]
+script = ExtResource("2_xtlcr")
+metadata/_custom_type_script = "uid://6v8hrehld5ww"
+
+[node name="HealthComponent" type="Node" parent="." unique_id=1335516408]
+script = ExtResource("3_mxvo0")
+metadata/_custom_type_script = "uid://d0rktxyd1xhah"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=480880022]
+shape = SubResource("RectangleShape2D_li03d")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1583015859]
+sprite_frames = SubResource("SpriteFrames_glq2b")
+
+[node name="StateMachine" type="Node" parent="." unique_id=1967751169 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("5_u08da")
+initial_state = NodePath("BasicNavState")
+metadata/_custom_type_script = "uid://b4wr0ctkidk8d"
+
+[node name="DeadState" type="Node" parent="StateMachine" unique_id=1804120122]
+script = ExtResource("6_eyy4a")
+metadata/_custom_type_script = "uid://c2n4cc7xbb27l"
+
+[node name="BasicNavState" type="Node" parent="StateMachine" unique_id=161060676]
+script = ExtResource("7_dchlg")
+metadata/_custom_type_script = "uid://cmjntyylk8i1f"
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=806589468]
+path_metadata_flags = 1
+debug_enabled = true

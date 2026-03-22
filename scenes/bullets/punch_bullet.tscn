@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://dl07dka728haj"]
+
+[ext_resource type="Script" uid="uid://843qms4uqqqu" path="res://scripts/bullet.gd" id="1_ssppa"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_iu88e"]
+
+[sub_resource type="Gradient" id="Gradient_f7p18"]
+colors = PackedColorArray(1, 0, 0.116666794, 1, 1, 0, 0.116666794, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ssppa"]
+gradient = SubResource("Gradient_f7p18")
+width = 16
+height = 16
+
+[node name="PunchBullet" type="Area2D" unique_id=894401149]
+collision_layer = 16
+collision_mask = 33
+script = ExtResource("1_ssppa")
+despawn_time = 0.1
+rotate_sprite = true
+metadata/_custom_type_script = "uid://843qms4uqqqu"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=571850204]
+shape = SubResource("CircleShape2D_iu88e")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=201561531]
+scale = Vector2(1, 1.091)
+texture = SubResource("GradientTexture2D_ssppa")

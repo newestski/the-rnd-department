@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://cqdhtgkei75ap"]
+
+[ext_resource type="Texture2D" uid="uid://bkp7n36lct1ym" path="res://assets/sprites/big_door.png" id="1_nlkv4"]
+[ext_resource type="Script" uid="uid://thtr45l2qbk1" path="res://scripts/exit_hatch.gd" id="1_uhhe0"]
+[ext_resource type="Script" uid="uid://d0rktxyd1xhah" path="res://scripts/health_component.gd" id="2_uhhe0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_alvv4"]
+radius = 35.089172
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_alvv4"]
+size = Vector2(106, 114)
+
+[node name="StaticBody2D" type="StaticBody2D" unique_id=1280592439 groups=["enemy_target"]]
+collision_layer = 128
+collision_mask = 0
+script = ExtResource("1_uhhe0")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1638248593]
+texture = ExtResource("1_nlkv4")
+hframes = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1825376679]
+position = Vector2(0, 3)
+shape = SubResource("CircleShape2D_alvv4")
+
+[node name="HealthComponent" type="Node" parent="." unique_id=1402364445]
+script = ExtResource("2_uhhe0")
+max_health = 50.0
+metadata/_custom_type_script = "uid://d0rktxyd1xhah"
+
+[node name="Area2D" type="Area2D" parent="." unique_id=504766191]
+position = Vector2(-9, 1)
+collision_layer = 48
+collision_mask = 48
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D" unique_id=1042415136]
+position = Vector2(9, 3)
+shape = SubResource("RectangleShape2D_alvv4")
+
+[node name="Timer" type="Timer" parent="." unique_id=714000585]
+autostart = true
+
+[connection signal="death" from="HealthComponent" to="." method="_on_health_component_death"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

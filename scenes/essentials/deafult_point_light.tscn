@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://c6lehj6gqn14g"]
+
+[sub_resource type="Gradient" id="Gradient_por61"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0.0454545, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 0.8217231, 0.7918184, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wfjt8"]
+gradient = SubResource("Gradient_por61")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.504587, 0.495413)
+fill_to = Vector2(0.20588236, 0.81764704)
+
+[node name="PointLight2D" type="PointLight2D" unique_id=1135430492]
+z_index = 2
+scale = Vector2(2, 2)
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_wfjt8")

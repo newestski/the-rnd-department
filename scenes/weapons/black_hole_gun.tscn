@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://djrcrle67rfle"]
+
+[ext_resource type="Script" uid="uid://di0oj41jo1dyg" path="res://scripts/weapons/black_hole_gun.gd" id="1_u5lge"]
+[ext_resource type="Texture2D" uid="uid://bmi3ymjkl4656" path="res://assets/sprites/black_hole_gun.png" id="2_llmnm"]
+[ext_resource type="AudioStream" uid="uid://6gvt7o63ahr2" path="res://assets/sounds/synth.wav" id="3_mttid"]
+[ext_resource type="Script" uid="uid://6p2g2ykbnv7l" path="res://scripts/despawn_component.gd" id="4_3gegq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mttid"]
+
+[node name="BlackHoleGun" type="Node2D" unique_id=759798904 node_paths=PackedStringArray("shoot_sfx")]
+script = ExtResource("1_u5lge")
+initial_ammo = 1
+hold_distance = 15.0
+damage = 20.0
+shoot_sfx = NodePath("ShootSound")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=2043296153]
+collision_layer = 4
+collision_mask = 35
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=694184877]
+shape = SubResource("RectangleShape2D_mttid")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1199980624]
+texture = ExtResource("2_llmnm")
+
+[node name="ShootSound" type="AudioStreamPlayer2D" parent="." unique_id=962175832]
+stream = ExtResource("3_mttid")
+bus = &"SFX"
+
+[node name="DespawnComponent" type="Node" parent="." unique_id=607693789]
+script = ExtResource("4_3gegq")
+time_between_flashes = 0.05

@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://bg6mgduk0osyh"]
+
+[ext_resource type="Script" uid="uid://be40p2cw2hayj" path="res://scripts/box.gd" id="1_brpd5"]
+[ext_resource type="Texture2D" uid="uid://bxse2db61oyax" path="res://assets/sprites/box1.png" id="2_ry43h"]
+[ext_resource type="Script" uid="uid://d0rktxyd1xhah" path="res://scripts/health_component.gd" id="3_dijgj"]
+[ext_resource type="PackedScene" uid="uid://c6lehj6gqn14g" path="res://scenes/essentials/deafult_point_light.tscn" id="4_telwu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oq5cr"]
+size = Vector2(16, 16)
+
+[node name="Box" type="RigidBody2D" unique_id=323231996 node_paths=PackedStringArray("health_component")]
+collision_layer = 32
+collision_mask = 9
+script = ExtResource("1_brpd5")
+health_component = NodePath("HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=19561899]
+shape = SubResource("RectangleShape2D_oq5cr")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1530350]
+texture = ExtResource("2_ry43h")
+
+[node name="HealthComponent" type="Node" parent="." unique_id=461338652]
+script = ExtResource("3_dijgj")
+max_health = 2.0
+metadata/_custom_type_script = "uid://d0rktxyd1xhah"
+
+[node name="PointLight2D" parent="." unique_id=1135430492 instance=ExtResource("4_telwu")]
+color = Color(0.89, 0, 0.014833107, 1)
+texture_scale = 0.5
+
+[connection signal="death" from="HealthComponent" to="." method="_on_health_component_death"]

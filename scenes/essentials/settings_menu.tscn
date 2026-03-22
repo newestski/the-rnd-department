@@ -1,0 +1,101 @@
+[gd_scene format=3 uid="uid://dd1xvk6sjmngj"]
+
+[ext_resource type="Script" uid="uid://c01td5hch0y5u" path="res://scripts/settings_popup.gd" id="1_ytrat"]
+[ext_resource type="Theme" uid="uid://c0kttx6uymffl" path="res://scenes/ui/new_theme.tres" id="2_s5av5"]
+
+[node name="SettingsMenu" type="PanelContainer" unique_id=1350959892 groups=["settings_menu"]]
+process_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -54.5
+offset_top = -26.0
+offset_right = 54.5
+offset_bottom = 26.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_s5av5")
+script = ExtResource("1_ytrat")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=265178099]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=329828927]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer" unique_id=113895396]
+layout_mode = 2
+text = "Settings"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=549487999]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1409490764]
+layout_mode = 2
+text = "Music"
+
+[node name="MusicSlider" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1158899121]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme = ExtResource("2_s5av5")
+max_value = 1.0
+step = 0.01
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=986281859]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=607914501]
+layout_mode = 2
+text = "Sound"
+
+[node name="SoundSlider" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1491000232]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme = ExtResource("2_s5av5")
+max_value = 1.0
+step = 0.01
+
+[node name="ResolutionButton" type="OptionButton" parent="MarginContainer/VBoxContainer" unique_id=1326478792]
+layout_mode = 2
+theme = ExtResource("2_s5av5")
+selected = 2
+allow_reselect = true
+item_count = 4
+popup/item_0/text = "480x240 (x1)"
+popup/item_0/id = 0
+popup/item_1/text = "960x480 (x2)"
+popup/item_1/id = 1
+popup/item_2/text = "1440x720 (x3)"
+popup/item_2/id = 2
+popup/item_3/text = "1920x960 (x4)"
+popup/item_3/id = 3
+
+[node name="Control" type="Control" parent="." unique_id=91129397]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="ExitButton" type="Button" parent="Control" unique_id=1233117248]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 0.078
+offset_left = -12.0
+offset_top = 4.0
+offset_right = -1.0
+offset_bottom = 9.007999
+grow_horizontal = 0
+text = "X"
+
+[connection signal="drag_ended" from="MarginContainer/VBoxContainer/HBoxContainer/MusicSlider" to="." method="_on_music_slider_drag_ended"]
+[connection signal="drag_ended" from="MarginContainer/VBoxContainer/HBoxContainer2/SoundSlider" to="." method="_on_sound_slider_drag_ended"]
+[connection signal="drag_started" from="MarginContainer/VBoxContainer/HBoxContainer2/SoundSlider" to="." method="_on_sound_slider_drag_started"]
+[connection signal="item_selected" from="MarginContainer/VBoxContainer/ResolutionButton" to="." method="_on_resolution_button_item_selected"]
+[connection signal="pressed" from="Control/ExitButton" to="." method="_on_exit_button_pressed"]
